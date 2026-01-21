@@ -3,20 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solar System - Practical Quiz</title>
-    <script src="script/aframe.min.js"></script>
+    <title>Solar System Simulation</title>
+    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
     <style>
         body {
             margin: 0;
             overflow: hidden;
             background: #000;
+            font-family: Arial, sans-serif;
         }
-        #info {
+        #loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 20px;
+            z-index: 1000;
+        }
+        #instructions {
             position: absolute;
             top: 20px;
             left: 20px;
             color: #fff;
-            font-family: Arial, sans-serif;
             font-size: 14px;
             background: rgba(0, 0, 0, 0.7);
             padding: 15px;
@@ -27,246 +36,178 @@
     </style>
 </head>
 <body>
-    <div id="info">
-        <h3>Solar System</h3>
-        <p>Use mouse to look around</p>
-        <p>Scroll to zoom in/out</p>
-        <p>All 9 planets revolve around the Sun at different speeds</p>
+    <div id="loading">Loading Solar System...</div>
+    <div id="instructions" style="display: none;">
+        <h3>Solar System Simulation</h3>
+        <p>• Move mouse to look around</p>
+        <p>• WASD keys to move</p>
+        <p>• Scroll to zoom in/out</p>
+        <p>• Planets orbit at different speeds</p>
     </div>
 
-    <a-scene background="color: #000000">
+    <a-scene background="color: #000000" loading-screen="enabled: false">
         <!-- Starfield background -->
-        <a-sky src="texture/2k_stars_milky_way.jpg"></a-sky>
+        <a-sky color="#000011"></a-sky>
 
         <!-- Sun at center -->
         <a-sphere 
             id="sun"
             position="0 0 0" 
-            radius="2"
-            src="texture/2k_sun.jpg"
-            animation="property: rotation; to: 0 360 0; dur: 50000; easing: linear; loop: true">
+            radius="2.5"
+            color="#FFD700"
+            animation="property: rotation; to: 0 360 0; dur: 25000; easing: linear; loop: true">
+            <a-light type="point" intensity="2" color="#FFFFFF" position="0 0 0"></a-light>
         </a-sphere>
 
-        <!-- Mercury - Fastest orbit, closest to sun -->
+        <!-- Mercury -->
         <a-entity id="mercury-orbit" position="0 0 0">
+            <a-ring radius-inner="3.8" radius-outer="3.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="4 0 0"
-                radius="0.38"
-                src="texture/2k_mercury.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 8000; easing: linear; loop: true">
+                radius="0.4"
+                color="#8C7853"
+                animation="property: rotation; to: 0 360 0; dur: 4000; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="8760"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Mercury" position="4 0.6 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
         <!-- Venus -->
         <a-entity id="venus-orbit" position="0 0 0">
+            <a-ring radius-inner="6.3" radius-outer="6.4" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="6.5 0 0"
-                radius="0.95"
-                src="texture/2k_venus_surface.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 12000; easing: linear; loop: true">
+                radius="0.6"
+                color="#FFC649"
+                animation="property: rotation; to: 0 360 0; dur: 6000; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="22440"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Venus" position="6.5 0.8 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
         <!-- Earth -->
         <a-entity id="earth-orbit" position="0 0 0">
+            <a-ring radius-inner="8.8" radius-outer="8.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="9 0 0"
-                radius="1"
-                src="texture/2k_earth_daymap.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 10000; easing: linear; loop: true">
+                radius="0.65"
+                color="#6B93D6"
+                animation="property: rotation; to: 0 360 0; dur: 5000; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="31536"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Earth" position="9 0.9 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
         <!-- Mars -->
         <a-entity id="mars-orbit" position="0 0 0">
+            <a-ring radius-inner="11.8" radius-outer="11.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="12 0 0"
-                radius="0.53"
-                src="texture/2k_mars.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 9000; easing: linear; loop: true">
+                radius="0.45"
+                color="#FF6B3D"
+                animation="property: rotation; to: 0 360 0; dur: 4500; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="59184"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Mars" position="12 0.7 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
-        <!-- Jupiter - Largest planet -->
+        <!-- Jupiter -->
         <a-entity id="jupiter-orbit" position="0 0 0">
+            <a-ring radius-inner="15.8" radius-outer="15.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="16 0 0"
-                radius="2.5"
-                src="texture/2k_jupiter.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 6000; easing: linear; loop: true">
+                radius="1.2"
+                color="#E0AA70"
+                animation="property: rotation; to: 0 360 0; dur: 3000; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="118800"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Jupiter" position="16 1.5 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
-        <!-- Saturn - With rings -->
+        <!-- Saturn -->
         <a-entity id="saturn-orbit" position="0 0 0">
+            <a-ring radius-inner="20.8" radius-outer="20.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="21 0 0"
-                radius="2.1"
-                src="texture/2k_saturn.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 7000; easing: linear; loop: true">
+                radius="1.0"
+                color="#FAD5A5"
+                animation="property: rotation; to: 0 360 0; dur: 3500; easing: linear; loop: true">
             </a-sphere>
             <!-- Saturn rings -->
             <a-ring 
                 position="21 0 0"
-                radius-inner="2.5"
-                radius-outer="4"
-                material="src: texture/2k_saturn_ring_alpha.png; transparent: true; side: double"
+                radius-inner="1.2"
+                radius-outer="1.8"
+                color="#D4A76A"
                 rotation="90 0 0">
             </a-ring>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="295200"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Saturn" position="21 1.3 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
         <!-- Uranus -->
         <a-entity id="uranus-orbit" position="0 0 0">
+            <a-ring radius-inner="25.8" radius-outer="25.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="26 0 0"
-                radius="1.6"
-                src="texture/2k_uranus.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 11000; easing: linear; loop: true">
+                radius="0.7"
+                color="#D1E7E7"
+                animation="property: rotation; to: 0 360 0; dur: 5500; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="843600"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Uranus" position="26 0.9 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
         <!-- Neptune -->
         <a-entity id="neptune-orbit" position="0 0 0">
+            <a-ring radius-inner="30.8" radius-outer="30.9" rotation="-90 0 0" color="#888" opacity="0.3"></a-ring>
             <a-sphere 
                 position="31 0 0"
-                radius="1.55"
-                src="texture/2k_neptune.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 9500; easing: linear; loop: true">
+                radius="0.68"
+                color="#5B5DDF"
+                animation="property: rotation; to: 0 360 0; dur: 4750; easing: linear; loop: true">
             </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="1652160"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
-        </a-entity>
-
-        <!-- Pluto (9th Planet) -->
-        <a-entity id="pluto-orbit" position="0 0 0">
-            <a-sphere 
-                position="35 0 0"
-                radius="0.2"
-                src="texture/2k_mercury.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 15000; easing: linear; loop: true">
-            </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="2480000"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
-        </a-entity>
-
-        <!-- Moon orbiting Earth -->
-        <a-entity id="moon-orbit" position="0 0 0">
-            <a-sphere 
-                position="10 0 0"
-                radius="0.27"
-                src="texture/2k_moon.jpg"
-                animation="property: rotation; to: 0 360 0; dur: 8000; easing: linear; loop: true">
-            </a-sphere>
-            <a-animation 
-                attribute="rotation"
-                from="0 0 0"
-                to="0 360 0"
-                dur="2592"
-                easing="linear"
-                repeat="indefinite">
-            </a-animation>
+            <a-text value="Neptune" position="31 0.9 0" align="center" scale="2 2 2" color="#FFF"></a-text>
         </a-entity>
 
         <!-- Camera -->
-        <a-camera position="0 5 25" look-controls wasd-controls></a-camera>
+        <a-camera position="0 5 35" look-controls wasd-controls="enabled: true">
+            <a-cursor></a-cursor>
+        </a-camera>
+
+        <!-- Lighting -->
+        <a-light type="ambient" color="#444"></a-light>
+        <a-light type="directional" color="#FFF" intensity="0.5" position="-1 1 1"></a-light>
     </a-scene>
 
     <script>
-        // Orbital animation system
+        // Setup orbits with 2x speed
         function setupOrbits() {
             const orbits = [
-                { id: 'mercury-orbit', speed: 8760 },
-                { id: 'venus-orbit', speed: 22440 },
-                { id: 'earth-orbit', speed: 31536 },
-                { id: 'mars-orbit', speed: 59184 },
-                { id: 'jupiter-orbit', speed: 118800 },
-                { id: 'saturn-orbit', speed: 295200 },
-                { id: 'uranus-orbit', speed: 843600 },
-                { id: 'neptune-orbit', speed: 1652160 },
-                { id: 'pluto-orbit', speed: 2480000 },
-                { id: 'moon-orbit', speed: 2592 }
+                { id: 'mercury-orbit', speed: 4380 },
+                { id: 'venus-orbit', speed: 11220 },
+                { id: 'earth-orbit', speed: 15768 },
+                { id: 'mars-orbit', speed: 29592 },
+                { id: 'jupiter-orbit', speed: 59400 },
+                { id: 'saturn-orbit', speed: 147600 },
+                { id: 'uranus-orbit', speed: 421800 },
+                { id: 'neptune-orbit', speed: 826080 }
             ];
 
             orbits.forEach(orbit => {
                 const element = document.getElementById(orbit.id);
                 if (element) {
-                    element.setAttribute('animation', `property: rotation; from: 0 0 0; to: 0 360 0; dur: ${orbit.speed}; easing: linear; loop: true`);
+                    element.setAttribute('animation', {
+                        property: 'rotation',
+                        from: '0 0 0',
+                        to: '0 360 0',
+                        dur: orbit.speed,
+                        easing: 'linear',
+                        loop: true
+                    });
                 }
             });
+
+            // Hide loading and show instructions
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('instructions').style.display = 'block';
         }
 
-        // Wait for scene to load
-        document.querySelector('a-scene').addEventListener('loaded', function() {
-            setupOrbits();
-        });
+        // When scene loads
+        document.querySelector('a-scene').addEventListener('loaded', setupOrbits);
     </script>
 </body>
 </html>
